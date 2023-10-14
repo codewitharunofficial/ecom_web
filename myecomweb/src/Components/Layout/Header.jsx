@@ -24,7 +24,7 @@ const Header = () => {
           <span className="navbar-toggler-icon" />
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <Link className="navbar-brand" to="/"> <FaShopify />Ecommerce App</Link>
+          <Link className="navbar-brand" to="/"> <FaShopify />ShopEase</Link>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <NavLink className="nav-link" to="/">Home</NavLink>
@@ -40,7 +40,7 @@ const Header = () => {
                   </li></>) :
 
                   (<> <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a className="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       {auth?.user?.name}
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
