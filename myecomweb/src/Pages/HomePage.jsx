@@ -130,14 +130,16 @@ const handleFilter = (value, id) => {
               products.map((p) => (
                 
                   <div
-                    className="card m-2 col-md-3" style={{ height: '22rem'}} key={p._id}
+                    className="card m-2 col-md-3" key={p._id}
                   >
+                    <Link to={`/products/${p.slug}`} >
                     <img
-                      className="card-img-top"
+                      className="card-img-top p-2"
                       src={`${process.env.REACT_APP_API}/api/v1/products/get-photo/${p._id}`}
                       alt={p.name}
-                      height={'40%'}
+                      height={'75%'}
                     />
+                    </Link>
                     <div className="card-body">
                       <h5 className="card-title">{p.name.slice(0, 15)}...</h5>
                       <h5 className="price">{p.price.toLocaleString("en-IN", { style:  "currency", currency: "INR"})}</h5>
@@ -147,10 +149,11 @@ const handleFilter = (value, id) => {
                       <div className="d-flex-between">
                       <button className="btn btn-warning m-1">Buy</button>
                       <button className="btn btn-primary m-1">Add To Cart</button>
-                      </div>
+                      </div> 
                     </div>
                   </div>
               ))
+
             )}
           </div>
         </div>

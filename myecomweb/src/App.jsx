@@ -21,6 +21,7 @@ import AddProduct from './Pages/Admin/AddProduct';
 import AllUsers from './Pages/Admin/AllUsers';
 import Products from './Pages/Admin/Products';
 import UpdateProduct from './Pages/Admin/UpdateProduct';
+import ProductDetails from './Pages/ProductDetails';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
     <>
     <Routes>
       <Route path='/about'  element={ <About />} />
+      <Route path='/products/:slug'  element={ <ProductDetails />} />
       <Route path='/policy'  element={ <Policy/> } />  
       <Route path='/dashboard'  element={ <ProtectedRoute/> } >
       <Route path='user'  element={ <Dashboard/> } />
