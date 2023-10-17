@@ -66,7 +66,7 @@ const ProductDetails = () => {
                       className="card-img-top p-2"
                       src={`${process.env.REACT_APP_API}/api/v1/products/get-photo/${id}`}
                       alt={name}
-                      height={'50%'}
+                      height={'40%'}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{name}</h5>
@@ -79,7 +79,7 @@ const ProductDetails = () => {
                       </p>
                       </div>
                       
-                      <div className="d-flex" style={{justifyContent: 'space-around', position: 'absolute', bottom: '10px'}}>
+                      <div className="d-flex text-center" style={{justifyContent: 'space-between', position: 'absolute', bottom: '10px'}}>
                       <button className="btn btn-warning m-1">Buy</button>
                       <button className="btn btn-primary m-1">Add To Cart</button>
                       </div> 

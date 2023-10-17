@@ -14,7 +14,30 @@ const HomePage = () => {
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
   const [radio, setRadio] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const  [loading, setLoading] = useState(false);
 
+
+  //get total count
+
+  const getTotal = async () => {
+    try {
+
+      const {data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/products/product-count`);
+
+      if(data?.success) {
+        setTotal(data.total)
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getTotal();
+  }, [])
 
   const getAllCategories = async () => {
     const {data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/category/category`);
@@ -43,26 +66,72 @@ const handleFilter = (value, id) => {
 }
 
 
+//applying filters to the products
+
+const filters = async () => {
+  try {
+    const {data} = await axios.post(`${process.env.REACT_APP_API}/api/v1/products/product-filters`, {checked, radio});
+
+    if(data?.success){
+      setProducts(data?.products)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
   const getAllProducts = async () => {
     try {
+
+      setLoading(true)
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}/api/v1/products/get-product`
+        `${process.env.REACT_APP_API}/api/v1/products/product-list/${page}`
       );
 
       if (data?.success) {
         setProducts(data.products);
+        setLoading(false)
       } else {
         toast.error("Error While Fetching The Page Data");
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getAllProducts();
-    //eslint-disable-next-line
-  }, []);
+   if(!checked.length || !radio.length) getAllProducts();
+    
+  }, [checked.length, radio.length]);
+
+  //for filters
+  useEffect(() => {
+   if(checked.length || radio.length) filters();
+    
+  }, [checked.length, radio.length]);
+
+
+  //laoding more products
+
+  const loadMore = async () => {
+    try {
+      setLoading(true);
+    const {data} = await axios.get(`${process.env.REACT_APP_API}/api/v1/products/product-list/${page}`)
+    setLoading(false);
+      setProducts([...products, ...data?.products]);
+    } catch (error) {
+      console.log(error)
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+   if(page === 1) return;
+    loadMore();
+
+  }, [page])
 
   return (
     <Layout title="Ecommerce - HomePage - Best Offers">
@@ -102,7 +171,7 @@ const handleFilter = (value, id) => {
       <div className="row mt-3">
         <div className="col-md-2">
           <h4 className="text-center">Filter By Category</h4>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column ml-2">
           {categories?.map((c)=> (
             <Checkbox key={c._id} onChange={(e) => handleFilter(e.target.checked, c._id)}>{c.name}</Checkbox>
           ))}
@@ -110,19 +179,21 @@ const handleFilter = (value, id) => {
 
           {/* price filter */}
           <h4 className="text-center mt-4">Filter By Price</h4>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column ml-2">
           <Radio.Group onChange={e => setRadio(e.target.value)}>
-            {Price?.map(p => (
-              <div key={p._id}>
+            {Price?.map(e => (
+              <div key={e._id}>
 
-                <Radio value={p.array}>{p.name}</Radio>
+                <Radio value={e.array}>{e.name}</Radio>
               </div>
             ))}
           </Radio.Group>
           </div>
+          <div className="d-flex flex-column">
+          <button className="btn btn-danger p-1 mt-2 ml-2 w-50" onClick={() => window.location.reload()}>Reset Filters</button>
+          </div>
         </div>
         <div className="col-md-9">
-          {JSON.stringify(radio, null, 4)}
           <div className="d-flex flex-wrap ">
             {!products ? (
               <Loader />
@@ -133,12 +204,15 @@ const handleFilter = (value, id) => {
                     className="card m-2 col-md-3" key={p._id}
                   >
                     <Link to={`/products/${p.slug}`} >
+                      <div style={{ borderBottom: '1px solid gray', padding: '10px'}}
+>
                     <img
                       className="card-img-top p-2"
                       src={`${process.env.REACT_APP_API}/api/v1/products/get-photo/${p._id}`}
                       alt={p.name}
-                      height={'75%'}
-                    />
+                      height={'200px'}
+                                          />
+                    </div>
                     </Link>
                     <div className="card-body">
                       <h5 className="card-title">{p.name.slice(0, 15)}...</h5>
@@ -146,17 +220,19 @@ const handleFilter = (value, id) => {
                       <p className="card-text">
                         {p.description.slice(0, 30)}...
                       </p>
-                      <div className="d-flex-between">
-                      <button className="btn btn-warning m-1">Buy</button>
-                      <button className="btn btn-primary m-1">Add To Cart</button>
-                      </div> 
                     </div>
                   </div>
               ))
 
             )}
           </div>
+          <div className="text-center">
+          {products && products.length < total && (
+            <button className="btn btn-primary mb-2" onClick={(e) => {e.preventDefault(); setPage(page + 1)}}> {loading ? <Loader/> : "Load More"}  </button>
+          )}
         </div>
+        </div>
+        
       </div>
     </Layout>
   );

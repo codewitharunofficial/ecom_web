@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { FaShopify } from 'react-icons/fa';
 import { useAuth } from '../../context/auth';
 import toast from 'react-hot-toast';
+import SearchInput from '../../Pages/Forms/SearchInput';
 
 const Header = () => {
 
@@ -26,6 +27,7 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <Link className="navbar-brand" to="/"> <FaShopify />ShopEase</Link>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+            <SearchInput/>
             <li className="nav-item">
               <NavLink className="nav-link" to="/">Home</NavLink>
             </li>
