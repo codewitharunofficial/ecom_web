@@ -196,12 +196,14 @@ const filters = async () => {
         <div className="col-md-9">
           <div className="d-flex flex-wrap ">
             {!products ? (
-              <Loader />
+
+                <Loader />
+              
             ) : (
               products.map((p) => (
                 
                   <div
-                    className="card m-2 col-md-3" key={p._id}
+                    className="card m-2 col-md-3" style={{border: '1px solid gray', borderRadius: '2px'}} key={p._id}
                   >
                     <Link to={`/products/${p.slug}`} >
                       <div style={{ borderBottom: '1px solid gray', padding: '10px'}}

@@ -15,7 +15,7 @@ const Layout = ({ children, title, description, author, keywords }) => {
           <title>{title}</title>
       </Helmet>
       <Header />
-      <main style={{ width: '100%', height: 'auto', marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(0deg, rgba(34,195,178,1) 13%, rgba(45,170,253,1) 71%)' }}>
+      <main style={{ width: '100%', height: 'auto', background: 'linear-gradient(0deg, rgba(34,195,178,1) 13%, rgba(45,170,253,1) 71%)' }}>
         {children}
         <Toaster toastOptions={{duration: 3000, position: 'top-center'}} />
       </main>

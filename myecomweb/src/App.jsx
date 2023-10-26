@@ -22,6 +22,7 @@ import AllUsers from './Pages/Admin/AllUsers';
 import Products from './Pages/Admin/Products';
 import UpdateProduct from './Pages/Admin/UpdateProduct';
 import ProductDetails from './Pages/ProductDetails';
+import SearchResults from './Pages/SearchResults';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
       <Route path='/contact'  element={ <Contact />} />
       <Route path='*'  element={ <PageNoteFound />} />
       <Route path='/'  element={ <HomePage />} />
+      <Route path='/search'  element={ <SearchResults />} />
       <Route path='/user/login'  element={ <Login />} />
       <Route path='/user/forgot-password'  element={ <ForgotPassword />} />
       <Route path='/user/signup'  element={ <SignUp />} />

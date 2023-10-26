@@ -1,6 +1,7 @@
 import slugify from "slugify";
 import productModel from "../Models/productModel.js";
 import fs from 'fs';
+import { populate } from "dotenv";
 // import { count } from "console";
 
 
@@ -86,8 +87,9 @@ export const getSingleProduct  = async (req, res) => {
       const product = await productModel.findOne({slug: req.params.slug}).select("-photo");
       res.status(200).send({
         success: true,
-        message:'Product Fetching SSuccessfull',
+        message:'Product Fetching Successfull',
         product
+        
       })
 
        } catch (error) {
@@ -145,6 +147,37 @@ export const updateProduct = async (req,  res)=>{
           message: "Error While Updating the Product",
           error
       })
+  }
+
+}
+
+//fetching  simlar products
+
+export const relatedProductController = async (req, res) => {
+
+  try {
+
+    const {pid, cid} = req.params;
+
+    const relatedProducts = await productModel.find({
+      category: cid,
+      _id: {$ne:pid}
+    }).select('-photo').limit(4).populate("category")
+
+    res.status(200).send({
+      success: true,
+      message: 'Successfully Fetched Related Products',
+      relatedProducts
+    })
+    
+  } catch (error) {
+    console.log(error)
+    res.status(400).send({
+      success: false,
+      message: 'Error While Getting Related products',
+      error
+    })
+    
   }
 
 }

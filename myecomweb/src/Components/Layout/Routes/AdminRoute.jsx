@@ -20,7 +20,7 @@ import Spinner from "../Spinner";
         if(auth?.token) authCheck();
     },[auth?.token]);
 
-    return ok? <Outlet/> : <Spinner path="/my-profile" />
+    return ok? <Outlet/> : <Spinner path="/dashboard" />
 }
 
 export default AdminRoute

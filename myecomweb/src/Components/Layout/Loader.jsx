@@ -3,18 +3,10 @@ import Layout from './Layout'
 
 const Loader = () => {
   return (
-    <Layout>
-            
-            <div className="d-flex flex-column justify-content-center align-items-center" style={{height: '70vh'}}>
-                <h3>Loading...</h3>
-                <div className="spinner-border" role="status">
-                    <span className="sr-only"></span>
-                </div>
-            </div>
-            
+    <div class="spinner-border bg-white text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
 
-
-        </Layout>
   )
 }
 

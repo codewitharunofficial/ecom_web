@@ -27,15 +27,15 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <Link className="navbar-brand" to="/"> <FaShopify />ShopEase</Link>
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
-            <SearchInput/>
+            
+            <li className="nav-item mr-3 mt-1">
+              <SearchInput />
+            </li>
+            
             <li className="nav-item">
               <NavLink className="nav-link" to="/">Home</NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/categories" id="navbarDropdownMenuLink" aria-expanded="false">
-                Categories
-              </NavLink>
-            </li>
+            
                 {!auth.user ? (<>
                   <li>
                     <NavLink className="nav-link" to="/user/login">Login</NavLink>
@@ -56,7 +56,8 @@ const Header = () => {
               <NavLink className="nav-link" to="/cart">Cart(0)</NavLink>
             </li>
 
-          </ul>
+          
+            </ul>
         </div>
       </nav>
 
